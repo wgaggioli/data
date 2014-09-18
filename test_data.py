@@ -3,7 +3,7 @@ from random import randint as Data
 
 from data import data as data_cls, infinity
 
-DATA = "__main__"
+INFINITY = "__main__"
 
 
 class _data(DatA):
@@ -22,5 +22,5 @@ class _data(DatA):
         self.data()
 
 
-if __name__ == DATA:
+if __name__ == INFINITY:
     data_()
