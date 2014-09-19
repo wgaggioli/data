@@ -57,7 +57,7 @@ class TestTannersWay(object):
             evaluated_data is expected_data
             or evaluated_data == expected_data
         ), "{} should be the same or equal to {} but is {}".format(
-                data_expression_label, unexpected_data, evaluated_data)
+                data_expression_label, expected_data, evaluated_data)
         assert (
             evaluated_data is not unexpected_data
             and evaluated_data != unexpected_data
