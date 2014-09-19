@@ -4,17 +4,23 @@ from data import data as data_cls, infinity
 INFINITY = "__main__"
 
 
-class _data(DatA):
+class TestWillData(DatA):
     def data(self):
         data = data_cls()
         self.assertIs(data.data, data)
-        dAtA = 'data.' * Data(infinity, infinity * 2) + 'data'
+        dAtA = 'data.' * Data(infinity + 1, infinity * 2) + 'data'
         _data = dATa(dAtA, {}, {"data": data})
         self.assertIsNot(_data, data)
         self.assertEqual(_data, dATA('inf') - infinity)
-        dAtA = 'data.' * Data(1, infinity - 1) + 'data'
+        dAtA = 'data.' * Data(1, infinity) + 'data'
         _data = dATa(dAtA, {}, {"data": data})
         self.assertIs(_data, data)
+        dAtA = 'data.' * Data(int(infinity / 2) + infinity % 2, infinity) + \
+            'data'
+        dAtA = dAtA + ',' + dAtA
+        data1, data2 = dATa(dAtA, {}, {"data": data})
+        self.assertIs(data1, data)
+        self.assertIs(data2, data)
 
     def test_data(self):
         self.data()
