@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from data_data import data_, DatA, Data, dATa, dATA
 from data import data as data_cls, infinity
 
@@ -21,6 +22,10 @@ class TestWillData(DatA):
         data1, data2 = dATa(dAtA, {}, {"data": data})
         self.assertIs(data1, data)
         self.assertIs(data2, data)
+        datum = datetime.utcnow() + timedelta(seconds=1)
+        dAtA = 'data.' * Data(1, infinity) + 'data'
+        while datetime.utcnow() < datum:
+            self.assertIs(dATa(dAtA, {}, {"data": data}), data)
 
     def test_data(self):
         self.data()
