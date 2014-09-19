@@ -3,6 +3,12 @@ data
 
 This is a Joke. Please don't judge us.
 
+
+---
+
+run the tests with `nosetests -v test_data.py`
+
+
                                                                                 
                                                                                 
                          ..,+$$+7~+=7Z++                                        

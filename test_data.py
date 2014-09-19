@@ -20,5 +20,50 @@ class _data(DatA):
         self.data()
 
 
+class TestTannersWay(object):
+
+    def test_generator(self):
+        start_offset = 2
+        for n in xrange(start_offset, infinity+start_offset):
+            test_data = data_cls()
+            yield self.make_data_func('new', test_data, n, test_data, float('inf'))
+        for n in xrange(infinity+start_offset, infinity+2+start_offset):
+            test_data = data_cls()
+            yield self.make_data_func('new', test_data, n, float('inf'), test_data)
+        test_data = data_cls()
+        for n in xrange(start_offset, infinity+start_offset):
+            yield self.make_data_func('existing', test_data, n, test_data, float('inf'))
+        for n in xrange(infinity+start_offset, infinity+2+start_offset):
+            yield self.make_data_func('existing', test_data, n, float('inf'), test_data)
+            
+    def make_data_func(self, data_func_label, test_data, n, expected_data,
+            unexpected_data):
+        data_n_tuple = ('data',)*n
+        data_expression = '.'.join(data_n_tuple)
+        data_expression_label = '{} {} data^{} ({} while infinity={})'.format(
+                data_func_label, test_data, n-1, data_expression, infinity)
+        data_test = lambda: self.assert_data(test_data, data_expression, n,
+                expected_data, unexpected_data, data_expression_label)
+        data_test.description = (
+            'Test {} is or equals {} while not being or being equal to {}'
+        ).format(data_expression_label, expected_data, unexpected_data)
+        data_test.compat_func_name = data_test.description
+        return data_test
+    
+    def assert_data(self, test_data, data_expression, n, expected_data, unexpected_data,
+            data_expression_label):
+        evaluated_data = eval(data_expression, {}, {'data': test_data})
+        assert (
+            evaluated_data is expected_data
+            or evaluated_data == expected_data
+        ), "{} should be the same or equal to {} but is {}".format(
+                data_expression_label, unexpected_data, evaluated_data)
+        assert (
+            evaluated_data is not unexpected_data
+            and evaluated_data != unexpected_data
+        ), "{} should NOT be the same or equal to {} but is {}".format(
+                data_expression_label, unexpected_data, evaluated_data)
+
+
 if __name__ == INFINITY:
     data_()
