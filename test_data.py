@@ -26,6 +26,13 @@ class TestWillData(DatA):
         dAtA = 'data.' * Data(1, infinity) + 'data'
         while datetime.utcnow() < datum:
             self.assertIs(dATa(dAtA, {}, {"data": data}), data)
+        tricky_data = data.data.data.data\
+            .data.data.data.data
+        self.assertEqual(tricky_data, dATA('inf') - infinity)
+        data3, data4 = data.data.data.data, data.data\
+            .data.data
+        self.assertIs(data3, data)
+        self.assertIs(data4, data)
 
     def test_data(self):
         self.data()
