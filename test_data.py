@@ -46,13 +46,17 @@ class TestTannersWay(object):
             yield self.make_data_func('existing', test_data, n, test_data, float('inf'))
         for n in xrange(infinity+start_offset, infinity+2+start_offset):
             yield self.make_data_func('existing', test_data, n, float('inf'), test_data)
+        
+        for n in xrange(start_offset, infinity+start_offset):
+            test_data = data_cls()
+            yield self.make_data_func('new', test_data, n, (test_data,test_data), (float('inf'),float('inf')), times=2)
             
     def make_data_func(self, data_func_label, test_data, n, expected_data,
-            unexpected_data):
+            unexpected_data, times=1):
         data_n_tuple = ('data',)*n
-        data_expression = '.'.join(data_n_tuple)
-        data_expression_label = '{} {} data^{} ({} while infinity={})'.format(
-                data_func_label, test_data, n-1, data_expression, infinity)
+        data_expression = ','.join(['.'.join(data_n_tuple)]*times)
+        data_expression_label = '{} {} data^{} {} times ({} while infinity={})'.format(
+                data_func_label, test_data, n-1, times, data_expression, infinity)
         data_test = lambda: self.assert_data(test_data, data_expression, n,
                 expected_data, unexpected_data, data_expression_label)
         data_test.description = (
