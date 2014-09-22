@@ -47,17 +47,33 @@ class TestTannersWay(object):
         for n in xrange(infinity+start_offset, infinity+2+start_offset):
             yield self.make_data_func('existing', test_data, n, float('inf'), test_data)
         
+        
         for n in xrange(start_offset, infinity+start_offset):
             test_data = data_cls()
             yield self.make_data_func('new', test_data, n, (test_data,test_data), (float('inf'),float('inf')), times=2)
-            
+        
+        test_data = data_cls()
+        inf_expression = 'data.{}'.format('.'.join(['data']*(infinity+1)))
+        yield (self.assert_data,
+				test_data,
+				'data.data,{}'.format(inf_expression),
+				(test_data, float('inf')),
+				(float('inf'), test_data),
+				'data^1 then data^{} in one statement'.format(infinity+1))
+        yield (self.assert_data,
+				test_data,
+				'{},data.data'.format(inf_expression),
+				(float('inf'), test_data),
+				(test_data, float('inf')),
+				'data^{} then data^1 in one statement'.format(infinity+1))
+		
     def make_data_func(self, data_func_label, test_data, n, expected_data,
             unexpected_data, times=1):
         data_n_tuple = ('data',)*n
-        data_expression = ','.join(['.'.join(data_n_tuple)]*times)
-        data_expression_label = '{} {} data^{} {} times ({} while infinity={})'.format(
+        data_expression = ', '.join(['.'.join(data_n_tuple)]*times)
+        data_expression_label = '{} {} data^{} {} times ( {} while infinity={} )'.format(
                 data_func_label, test_data, n-1, times, data_expression, infinity)
-        data_test = lambda: self.assert_data(test_data, data_expression, n,
+        data_test = lambda: self.assert_data(test_data, data_expression,
                 expected_data, unexpected_data, data_expression_label)
         data_test.description = (
             'Test {} is or equals {} while not being or being equal to {}'
@@ -65,7 +81,7 @@ class TestTannersWay(object):
         data_test.compat_func_name = data_test.description
         return data_test
     
-    def assert_data(self, test_data, data_expression, n, expected_data, unexpected_data,
+    def assert_data(self, test_data, data_expression, expected_data, unexpected_data,
             data_expression_label):
         evaluated_data = eval(data_expression, {}, {'data': test_data})
         assert (
