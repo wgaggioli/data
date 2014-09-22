@@ -8,7 +8,7 @@ INFINITY = "__main__"
 class TestWillData(DatA):
     def data(self):
         data = data_cls()
-        """self.assertIs(data.data, data)
+        self.assertIs(data.data, data)
         dAtA = 'data.' * Data(infinity + 1, infinity * 2) + 'data'
         _data = dATa(dAtA, {}, {"data": data})
         self.assertIsNot(_data, data)
@@ -28,7 +28,7 @@ class TestWillData(DatA):
             self.assertIs(dATa(dAtA, {}, {"data": data}), data)
         tricky_data = data.data.data.data\
             .data.data.data.data
-        self.assertEqual(tricky_data, dATA('inf') - infinity)"""
+        self.assertEqual(tricky_data, dATA('inf') - infinity)
         data3, data4 = data.data.data.data, data.data\
             .data.data
         self.assertIs(data3, data)
