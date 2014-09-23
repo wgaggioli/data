@@ -34,19 +34,12 @@ class TestWillData(DatA):
         self.assertIs(data3, data)
         self.assertIs(data4, data)
 
-        data_d = getattr(data, 'data')
-        self.assertIs(data_d, data)
-        data_inf = getattr(
-            getattr(
-                getattr(
-                    getattr(
-                        getattr(
-                            getattr(getattr(data, 'data'), 'data'),
-                            'data'),
-                        'data'),
-                    'data'),
-                'data'),
-            'data')
+        data_inf = (data.
+        data
+        .data
+        .data
+        .data.data
+        .data)
         self.assertIs(data_inf, dATA('inf') - infinity)
 
     def test_data(self):
