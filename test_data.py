@@ -54,6 +54,26 @@ class TestWillData(DatA):
 
 
 class TestTannersWay(object):
+    
+    def test_1_with_break(self):
+		data = data_cls()
+		data1 = data \
+			.data
+		assert data1 is data
+    
+    def test_2by2_with_break(self):
+		data = data_cls()
+		data1, data2 = data.data.data, data.data\
+            .data
+		assert data1 is data
+		assert data2 is data
+    
+    def test_2by3_with_break(self):
+		data = data_cls()
+		data1, data2 = data.data.data.data, data.data\
+            .data.data
+		assert data1 is data
+		assert data2 is data
 
     def test_generator(self):
         start_offset = 2
@@ -77,18 +97,24 @@ class TestTannersWay(object):
         test_data = data_cls()
         inf_expression = 'data.{}'.format('.'.join(['data']*(infinity+1)))
         yield (self.assert_data,
-                test_data,
-                'data.data,{}'.format(inf_expression),
-                (test_data, float('inf')),
-                (float('inf'), test_data),
-                'data^1 then data^{} in one statement'.format(infinity+1))
+				test_data,
+				'{},data.data'.format(inf_expression),
+				(float('inf'), test_data),
+				(test_data, float('inf')),
+				'data^{} then data^1 in one statement'.format(infinity+1))
         yield (self.assert_data,
-               test_data,
-               '{},data.data'.format(inf_expression),
-               (float('inf'), test_data),
-               (test_data, float('inf')),
-               'data^{} then data^1 in one statement'.format(infinity+1))
-
+				test_data,
+				"data\\\n.data",
+				test_data,
+				float('inf'),
+				'data^1 with line break')
+        yield (self.assert_data,
+				test_data,
+				"data,data\\\n.data",
+				(test_data, test_data),
+				(float('inf'), float('inf')),
+				'data^1 then data^1 with line break')
+	
     def make_data_func(self, data_func_label, test_data, n, expected_data,
                        unexpected_data, times=1):
         data_n_tuple = ('data',)*n
